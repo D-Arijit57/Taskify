@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Task Board</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: sans-serif; }
+        /* Utility to hide scrollbar but allow scrolling */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "uuid": "https://esm.sh/uuid@^13.0.0"
+  }
+}
+</script>
+</head>
+<body class="bg-white h-screen flex flex-col text-slate-800">
+
+    <!-- Header -->
+    <header class="p-6 border-b border-gray-200">
+        <h1 class="text-2xl font-bold">My Board</h1>
+    </header>
+
+    <!-- Main Board -->
+    <main class="flex-1 overflow-x-auto p-6">
+        <div class="flex gap-6 h-full items-start min-w-max">
+            
+            <!-- Column: TO DO -->
+            <div class="w-80 bg-gray-50 rounded-xl p-4 flex flex-col h-full max-h-full border border-gray-100">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="font-bold text-sm text-gray-600 uppercase">To Do</h2>
+                    <span id="count-todo" class="bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded-full">1</span>
+                </div>
+                
+                <!-- Container for Tasks -->
+                <div id="todo-list" class="flex-1 overflow-y-auto no-scrollbar space-y-3">
+                    
+                    <!-- SIMPLIFIED TASK CARD TEMPLATE -->
+                    <!-- Structure: div (wrapper) -> h3 (title) + p (desc) + button (delete) -->
+
+                </div>
+
+                <button id="btn-add-todo" class="mt-3 w-full py-2 text-sm text-gray-500 border-2 border-dashed border-gray-200 rounded-lg hover:border-gray-400 hover:text-gray-700 transition-colors" onclick="addnewTodo()">
+                    + Add New
+                </button>
+            </div>
+
+            <!-- Column: IN PROGRESS -->
+            <div class="w-80 bg-gray-50 rounded-xl p-4 flex flex-col h-full max-h-full border border-gray-100">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="font-bold text-sm text-blue-600 uppercase">In Progress</h2>
+                    <span id="count-inprogress" class="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded-full">1</span>
+                </div>
+                
+                <div id="inprogress-list" class="flex-1 overflow-y-auto no-scrollbar space-y-3">
+                    <!-- Example Task -->
+                </div>
+            </div>
+
+            <!-- Column: DONE -->
+            <div class="w-80 bg-gray-50 rounded-xl p-4 flex flex-col h-full max-h-full border border-gray-100">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="font-bold text-sm text-green-600 uppercase">Done</h2>
+                    <span id="count-done" class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full">0</span>
+                </div>
+                
+                <div id="done-list" class="flex-1 overflow-y-auto no-scrollbar space-y-3">
+                    <!-- Empty initially -->
+                </div>
+
+                <button id="btn-add-done" class="mt-3 w-full py-2 text-sm text-gray-500 border-2 border-dashed border-gray-200 rounded-lg hover:border-gray-400 hover:text-gray-700 transition-colors">
+                    + Add New
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
