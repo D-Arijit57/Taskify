@@ -12,11 +12,15 @@ function addnewTodo(){
     }
     todoObj.response = prompt("Enter your task").trim();
     if (!todoObj.response) {
-        alert("Task shouldn't be empty")
-    }; // incase the user doesn't type anything
+        alert("Task shouldn't be empty");
+        return;
+    }// in case the user doesn't type anything
     // push the new todo text into the array and render
+    else {
     todoArr.push(todoObj); 
     render();
+    }
+    
 }
 // Centralized function for moving the todo (changing the status)
 function moveTodo(id, newStatus ){
@@ -48,7 +52,16 @@ function createComponent(todo){
     const startbtn = document.createElement('button'); 
 
     newDiv.className ="p-3 bg-white border border-gray-200 rounded shadow-sm relative group";
+    // adding an extra className using .classList.add
+    newDiv.classList.add('todo-item');
     newDiv.id = "todo-" + todo.id;
+    newDiv.draggable =true;
+    // adding an eventListner for whenever the item is selected and dargged
+    newDiv.addEventListener('dragstart' , e => {
+        // you can't store a raw number in a data tansfer so storing it in a string
+        e.dataTransfer.setData('text/plain',String(todo.id));
+
+    })
     newh3.className = "font-bold text-sm pr-8"; 
     deletebtn.className ="absolute top-2 right-2 text-gray-400 hover:text-red-600 transition-colors duration-200";
     deletebtn.innerHTML = `
@@ -99,4 +112,23 @@ function render(){
         else if(todo.status === 'completed') completedContainer.appendChild(el);
         });
 }
-
+// here columns are the dropping zone for us 
+const columns = [
+    document.getElementById("todo-list"),
+    document.getElementById("inprogress-list"),
+    document.getElementById("done-list")
+]
+columns.forEach(col => {
+    col.addEventListener('dragover' , e =>{
+        e.preventDefault();
+    });
+    col.addEventListener('drop', e =>{
+        e.preventDefault();
+        col.classList.remove('hovered');
+    const idStr = e.dataTransfer.getData('text/plain'); // to get the data (id) that we set earlier
+    const id = Number(idStr);// since we converted into a string earlier we need to convert it back to a number
+    const newStatus = col.dataset.status; 
+    if(!Number.isNaN(id)) moveTodo(id , newStatus);
+    });
+    
+})
