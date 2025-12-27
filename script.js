@@ -3,6 +3,17 @@
  let todoArr = []; // array in which the todos will get pushed
  let nextID = 1;
 
+ window.addEventListener("load",() =>{
+    const savedData = localStorage.getItem("taskBoardData");
+    if (savedData) {
+        todoArr = JSON.parse(savedData);
+         nextID = todoArr.length ? Math.max(...todoArr.map(t => t.id)) + 1 : 1;
+    }
+    render();
+ });
+ function saveToLocalStorage() {
+    localStorage.setItem("taskBoardData", JSON.stringify(todoArr));
+}
 function addnewTodo(){
     // each todo has a text (response), status (todo , progress, completed) and an Id (for deletion , insertion and updation of the todo)
     const todoObj = {
@@ -18,6 +29,7 @@ function addnewTodo(){
     // push the new todo text into the array and render
     else {
     todoArr.push(todoObj); 
+    saveToLocalStorage();
     render();
     }
     
@@ -27,6 +39,7 @@ function moveTodo(id, newStatus ){
     const idx = findIndexByID(id);
     if(idx === -1) return;
     todoArr[idx].status = newStatus;
+    saveToLocalStorage();
     render();
 }
 // Delete function for each todo 
