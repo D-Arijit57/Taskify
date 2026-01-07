@@ -40,6 +40,22 @@ function deleteTodo(id){
 // To be done 
 function archiveTodo(id){
 }
+// to edit a todo
+function editTodo(id){
+    const idx = findIndexByID(id);
+    if(idx === -1) return;
+    else{
+        const newTask = prompt("Enter you new task");
+        if(!newTask){
+            alert("Task shouldn't be empty!");
+            return;
+        } 
+        else{
+           todoArr[idx].response = newTask;
+        }
+    }
+    render();
+}
 // findIndex is a built-in function to find a specific index given in the paremeter 
 function findIndexByID(id){
     return todoArr.findIndex(elem => elem.id === id);
